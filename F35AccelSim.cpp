@@ -86,7 +86,7 @@ int main()
 				}
 			}
 			v_final_table[j][k] = F35_accel.state_real[1];
-			if (v_final_table[j][k] < 308.0 && v_final_table[j][k] > 304.0)
+			if (v_final_table[j][k] < 307.0 && v_final_table[j][k] > 305.0)
             {
                 std::cout << "A: " << A_table[j] << " T1: " << T1_table[k] << " v_final: " << v_final_table[j][k] << std::endl;
                 A_T1_combination combo_temp;
@@ -132,7 +132,7 @@ int main()
 
             if (F35_accel.state_real[1] > 306)
             {
-                std::cout << "A: " << A << " T2: " << T2 << " v_ini: " << F35_initial[1] << " v_ final: " << F35_accel.state_real[1] << " time: " << j * F35_accel.timestep << std::endl;
+                std::cout << "A: " << A << " T2: " << T2 << " v_init: " << F35_initial[1] << " v_ final: " << F35_accel.state_real[1] << " time: " << j * F35_accel.timestep << std::endl;
                 break;
             }
         }
@@ -172,7 +172,7 @@ int main()
 
             if (F35_accel.state_real[1] > 305.5)
             {
-                std::cout << "A: " << A << " T2: " << T2 << " v_ini: " << F35_initial[1] << " v_ final: " << F35_accel.state_real[1] << " time: " << j * F35_accel.timestep << std::endl;
+                std::cout << "A: " << A << " T2: " << T2 << " v_init: " << F35_initial[1] << " v_ final: " << F35_accel.state_real[1] << " time: " << j * F35_accel.timestep << std::endl;
                 break;
             }
         }
