@@ -22,10 +22,10 @@ int main()
 	// F-35 accel initial
     double g = 9.8;
 	double m1 = 19000;
-	double m2 = 15600;
+	double m2 = 16000;
 	double density1 = 0.774;
 	double density2 = 1.111;
-	double cla = 0.07;
+	double cla = 0.067;
 	double cd0 = 0.02;
 	double S = 42.7;
 	double A = 0.15; // not accurate. to be corrected
@@ -49,10 +49,11 @@ int main()
 	double v_final_table[20][20] = {{0.0}};
 	for (int i = 0; i < 20; i++)
 	{
-		A_table[i] = 0.05 + 0.01 * i;
+		A_table[i] = 0.08 + 0.005 * i;
 		T1_table[i] = 10000 * g + 500 * g * i;
 	}
 
+	std::cout << "Configuration: 60% internal fuel and 2 amraams, 19000 kg flying weight" << std::endl;
 	std::cout << "Official data: at 4527 m, from 193.3m/s and accelerate for 17.9 s, F-35 should achieve 306 m/s" << std::endl;
 	std::cout << "Official data verification at 4527 m, after accelerating for 17.9 s:" << std::endl;
 	for (int j = 0; j < 20; j++)
@@ -100,6 +101,7 @@ int main()
 	// verification finished. Now initialize prediction.
 	std::cout << "////// ****** //////" << std::endl;
 	std::cout << "F35 sim v3.02 at 1000 m, 193.3m/s to 306m/s acceleration:" << std::endl;
+	std::cout << "Configuration: 2400 kg fuel and 2 amraams, 16000 kg flying weight" << std::endl;
 	F35_initial[1] = 193.3;
 	for (int i = 0; i < possible_combination.size(); i++)
     {
@@ -139,7 +141,8 @@ int main()
     }
 
     std::cout << "////// ****** //////" << std::endl;
-    std::cout << "F35 sim v3.02 at 1000 m, 166.6m/s (600km/h) to 305.5m/s (1100km/h) acceleration:" << std::endl;
+    std::cout << "F35 sim v3.02 at 1000 m, 166.6m/s (600km/h) to 305.5m/s (1100km/h) acceleration (Su-27 spends 15s):" << std::endl;
+	std::cout << "Configuration: 2400 kg fuel and 2 amraams, 16000 kg flying weight" << std::endl;
 	F35_initial[1] = 166.6;
 	for (int i = 0; i < possible_combination.size(); i++)
     {
@@ -177,6 +180,23 @@ int main()
             }
         }
     }
-
+    std::cout << "////// ****** //////" << std::endl;
+    std::cout << "F35 sim v3.02 sea level maximum SEP:" << std::endl;
+    for (int i = 0; i < possible_combination.size(); i++)
+    {
+        A = possible_combination[i].A;
+        T1 = possible_combination[i].T1;
+        double density_sl = 1.225;
+        double T_sl = density_sl / density1 * T1;
+        for (double j = 0.5; j < 0.91; j += 0.1)
+        {
+            double speed = j * 340.0;
+            double cl = m2 * g / (0.5 * density_sl * speed * speed * S);
+            double cd = cd0 + A * cl * cl;
+            double D = cd / cl * m2 * g;
+            double SEP = (T_sl - D) * speed / (m2 * g);
+            std::cout << "A: " << A << " T_sl: " << T_sl << " Mach: " << j <<" SEP_max: " << SEP << std::endl;
+        }
+    }
 }
 
